@@ -118,14 +118,14 @@ const LoginScreen = ({ navigation }) => {
                 setmobilenumber(text);
 
                 if (!validateMobilenumber(text)) {
-                  setError('Enter valid Mobile Number');
+                  setError('Invalid Mobile number address');
                 } else {
                   setError(null);
                 }
               }
             }}
           />
-          {error && <Text style={{ color: 'red', bottom: 12 ,marginLeft:10}}>{error}</Text>}
+          {error && <Text style={{ color: 'red', bottom: 12 }}>{error}</Text>}
 
           <TextInput
             style={styles.input}
@@ -138,13 +138,13 @@ const LoginScreen = ({ navigation }) => {
               setEnterPassword(text);
 
               if (!Validatepassword(text)) {
-                setError2('Enter valid Password Number');
+                setError2('Invalid password address');
               } else {
                 setError2(null);
               }
             }}
           />
-          {error2 && <Text style={{ color: 'red', bottom: 12,marginLeft:10 }}>{error2}</Text>}
+          {error2 && <Text style={{ color: 'red', bottom: 12 }}>{error2}</Text>}
                   
           <TouchableOpacity onPress={forgotPasswordText}>
         <Text style={styles.forgotPasswordText}>Forgot Password</Text>
@@ -231,8 +231,8 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 12,
-    elevation: 14,
+    shadowRadius: 2,
+    elevation: 2,
   },
   termsContainer: {
     flexDirection: 'row',
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
   forgotPasswordText: {
     color: 'blue',
     marginLeft: 204,
-  bottom:15,
+  bottom:20,
     alignContent: 'center',
     fontSize: 16,
    
@@ -287,12 +287,10 @@ const styles = StyleSheet.create({
   signupText: {
     fontSize: 16,
     marginRight: 5,
-    bottom:10
   },
   signupLink: {
     color: 'blue',
     fontSize: 16,
-    bottom:10
   },
 });
 

@@ -1,9 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { Text, View, StyleSheet, Animated, TouchableOpacity, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { Text, View, StyleSheet, Animated, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { DotIndicator } from 'react-native-indicators';
 
-const CircleIcons = () => {
+const All = () => {
   const scrollViewRef = useRef(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -19,8 +18,19 @@ const CircleIcons = () => {
   };
 
   const scrollToIndex = index => {
-    scrollViewRef.current.scrollTo({ x: index *60, y: 0, animated: true });
+    scrollViewRef.current.scrollTo({ x: index * 60, y: 0, animated: true });
   };
+
+  const categories = [
+    { label: 'All', image: require('../src/img/all.png') },
+    { label: 'Transfer', image:require('../src/img/Trans.png') },
+    { label: 'Bills', image: require('../src/img/bills.jpg') },
+    { label: 'Travel', image: require('../src/img/travel.png') },
+    { label: 'Insuranc', image:require('../src/img/health.png') },
+    { label: 'Loans', image: require('../src/img/loan.png') },
+    { label: 'Investme', image: require('../src/img/profit.png') },
+    { label: 'Services', image:require('../src/img/service.png') },
+  ];
 
   return (
     <View style={styles.container}>
@@ -31,44 +41,22 @@ const CircleIcons = () => {
         contentContainerStyle={styles.scrollContainer}
         onScroll={handleScroll}
         scrollEventThrottle={16}
-        snapToInterval={20}
+        snapToInterval={60}
         decelerationRate="fast"
       >
-        <View style={styles.circleContainer}>
-          <Icon name="th-large" size={25} color="#0078D7" />
-          <Text style={styles.iconLabel}>All</Text>
-        </View>
-        <View style={styles.circleContainer}>
-          <Icon name="exchange" size={25} color="#0078D7" />
-          <Text style={styles.iconLabel}>Transfer</Text>
-        </View>
-        <View style={styles.circleContainer}>
-          <Icon name="money" size={25} color="#0078D7" />
-          <Text style={styles.iconLabel}>Bills</Text>
-        </View>
-        <View style={styles.circleContainer}>
-          <Icon name="plane" size={25} color="#0078D7" />
-          <Text style={styles.iconLabel}>Travel</Text>
-        </View>
-        <View style={styles.circleContainer}>
-          <Icon name="shield" size={25} color="#0078D7" />
-          <Text style={styles.iconLabel}>Insuranc</Text>
-        </View>
-        <View style={styles.circleContainer}>
-          <Icon name="money" size={25} color="#0078D7" />
-          <Text style={styles.iconLabel}>Loans</Text>
-        </View>
-        <View style={styles.circleContainer}>
-          <Icon name="line-chart" size={25} color="#0078D7" />
-          <Text style={styles.iconLabel}>Investments</Text>
-        </View>
-        <View style={styles.circleContainer}>
-          <Icon name="cog" size={25} color="#0078D7" />
-          <Text style={styles.iconLabel}>Services</Text>
-        </View>
+        {categories.map((category, index) => (
+          <TouchableOpacity
+            key={index}
+            style={[styles.circleContainer, currentIndex === index && styles.activeCircle]}
+            onPress={() => scrollToIndex(index)}
+          >
+            <Image source={category.image} style={styles.iconImage} />
+            <Text style={styles.iconLabel}>{category.label}</Text>
+          </TouchableOpacity>
+        ))}
       </ScrollView>
       <View style={styles.dotsContainer}>
-        {Array.from({ length: 8 }, (_, index) => (
+        {Array.from({ length: categories.length }, (_, index) => (
           <TouchableOpacity
             key={index}
             style={[styles.dot, currentIndex === index && styles.activeDot]}
@@ -80,7 +68,7 @@ const CircleIcons = () => {
   );
 };
 
-export default CircleIcons;
+export default All;
 
 const styles = StyleSheet.create({
   container: {
@@ -107,9 +95,17 @@ const styles = StyleSheet.create({
     shadowRadius: 15.19,
     elevation: 23,
   },
+  iconImage: {
+    width: 25,
+    height: 25,
+    marginBottom: 4,
+  },
   iconLabel: {
     marginTop: -6,
     textAlign: 'center',
+  },
+  activeCircle: {
+    backgroundColor: '#0078D7',
   },
   dotsContainer: {
     flexDirection: 'row',
@@ -122,7 +118,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginHorizontal: 4,
     backgroundColor: '#0078D7',
-    bottom:12
+    bottom: 12,
   },
   activeDot: {
     backgroundColor: '#FFF',

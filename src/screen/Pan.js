@@ -1,114 +1,160 @@
-import React, { useState, useEffect } from 'react';
-import { View, TextInput, StyleSheet, Animated ,Text,TouchableOpacity} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import React, { useState } from 'react';
+import { View, TextInput, StyleSheet, Animated, TouchableOpacity, Text } from 'react-native';
 
-const CardWithPANInput = ({navigation}) => {
+const PanCard = ({navigation,route}) => {
+  const { item } = route.params;
+  // console.log("PAN----",item)
+  const [panNumber, setPanNumber] = useState('');
+  const [error, setError] = useState(null);
+  const [shadowAnimation] = useState(new Animated.Value(1));
 
-  const handleContinue = () => {
-    navigation.navigate('Address');
+  const handlePanChange = (text) => {
+    setPanNumber(text);
   };
-  const [panNumber, setPANNumber] = useState('');
- const [error4, setError4] = useState(null);
-  const [cardAnimation] = useState(new Animated.Value(0));
 
-
-    const ValidateEnterPAN = EnterPAN => {
-    var pattern = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
-    return pattern.test(EnterPAN);
-  };
-  useEffect(() => {
-    Animated.spring(cardAnimation, {
-      toValue: 1,
-      tension: 10,
-      useNativeDriver: true,
+  const handleFocus = () => {
+    Animated.spring(shadowAnimation, {
+      toValue: 0.7,
+      friction: 6,
+      tension: 60,
+      useNativeDriver: false,
     }).start();
-  }, []);
+  };
 
-  
+  const handleBlur = () => {
+    Animated.spring(shadowAnimation, {
+      toValue: 1,
+      friction: 6,
+      tension: 60,
+      useNativeDriver: false,
+    }).start();
+  };
 
-  const cardTranslateY = cardAnimation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-400, 0],
-  });
+  const shadowStyle = {
+    shadowOpacity: shadowAnimation.interpolate({
+      inputRange: [0.7, 1],
+      outputRange: [0.5, 0.7],
+    }),
+    transform: [
+      {
+        scale: shadowAnimation.interpolate({
+          inputRange: [0.7, 1],
+          outputRange: [1.03, 1],
+        }),
+      },
+    ],
+  };
+
+  const handleContinue = async () => {
+    try {
+      const response = await fetch('http://192.168.1.5:7000/users/registerPAN', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: item,
+          PAN: panNumber,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.status == true) {
+        console.log(''.data)
+        navigation.navigate('Register',{ items:data.data.id});
+      } else {
+        setError('Invalid ');
+      }
+    } catch (error) {
+      console.error("tdrt", error);
+    }
+    
+  };
 
   return (
-    <Animated.View style={[styles.container, { transform: [{ translateY: cardTranslateY }] }]}>
+    <View style={styles.container}>
+       <Text style={styles.title}>Enter PAN </Text>
       <View style={styles.card}>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter PAN Number"
-          value={panNumber}
-           onChangeText={(text) => {
-
-          setPANNumber(text);
-
-          if (!ValidateEnterPAN(text)) {
-
-            setError4('Invalid PAN address');
-
-          } else {
-
-            setError4(null);
-
-          }
-
-        }}
-      />
-      {error4 && <Text style={{ color: 'red' }}>{error4}</Text>}
-      <Text style={styles.loginButtonText}>Continue</Text><FontAwesome name="arrow-right" size={20} color='white' style={{marginLeft:123,bottom:13}}/>
-      <TouchableOpacity style={styles.loginButton} onPress={handleContinue}>
-        <Text style={styles.loginButtonText}>Continue</Text><FontAwesome name="arrow-right" size={20} color='white' style={{marginLeft:123,bottom:13}}/>
-      </TouchableOpacity>
+        <Animated.View style={[styles.cardContent, shadowStyle]}>
+          <TextInput
+            style={styles.panInput}
+            value={panNumber}
+            onChangeText={handlePanChange}
+            placeholder="Enter PAN number "
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+          />
+        </Animated.View>
+        <TouchableOpacity style={styles.continueButton} onPress={handleContinue}>
+          <Text style={styles.buttonText}>Continue</Text>
+        </TouchableOpacity>
+        {console.log('---',panNumber)}
       </View>
-    </Animated.View>
-    
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F5F5F5',
   },
   card: {
-    backgroundColor: 'white',
-    borderRadius: 8,
+    width: 400,
+    height: 300,
+    backgroundColor: 'black',
+    borderRadius: 20,
+    elevation: 6,
     padding: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.5,
     shadowRadius: 4,
-    elevation: 2,
-    height:'50%',
-    width:'60%'
+    bottom:40
   },
-  input: {
-    height: 40,
-    top:30,
-    borderColor: 'black',
-    borderWidth: 2,
-    borderRadius: 1,
-    paddingHorizontal: 10,
+  cardContent: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 30,
+    overflow: 'hidden',
+    width: 360,
+    top: 40,
+    marginLeft: 6
   },
-  loginButton: {
-    width: '50%',
-    height: 40,
-    borderRadius: 25,
-    backgroundColor: '#007aff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    top:90,
-    marginLeft:48
+  panInput: {
+    flex: 1,
+    fontSize: 16,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    marginLeft: 80,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 14,
+    
+    
   },
-  loginButtonText: {
-    fontSize: 18,
-    color: '#fff',
-    top:8
+  continueButton: {
+    backgroundColor: 'blue',
+    paddingVertical: 15,
+    paddingHorizontal: 120,
+    borderRadius: 5,
+    marginTop: 20,
+    top:200
   },
-  setError4:{
-     top:34
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginLeft:20
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 80,
   },
 });
 
-export default CardWithPANInput;
+export default PanCard;

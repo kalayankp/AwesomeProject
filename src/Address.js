@@ -34,10 +34,10 @@ const roles = [
 
 const Login = ({navigation}) => {
 
-  const handleContinue = () => {
-    navigation.navigate('Dob');
-  };
-  
+
+  const [selectedRole, setSelectedRole] = useState('Select Role');
+  const { items } = route.params;
+  console.log("pan----",items)
     const [error4, setError4] = useState('');
     const [accountNumber, setAccountNumber] = useState('');
     const [confirmaccountNumber, setconfirmAccountNumber] = useState('');
@@ -45,14 +45,17 @@ const Login = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [error, setError] = useState(null);
   const [otp, setOTP] = useState('');
-  const [selectedRole, setSelectedRole] = useState('Select Role');
+
   const [shakingAnimation] = useState(new Animated.Value(0));
 
   const onRoleChange = (itemValue) => {
     setSelectedRole(itemValue);
   };
  
- 
+  const handleContinue = async () => {
+   
+    
+  };
 
 
   const handleAccountNumberChange = (text) => {

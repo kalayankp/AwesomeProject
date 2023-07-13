@@ -1,36 +1,35 @@
 import React from 'react';
 import { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet,Switch } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { View, Text, TouchableOpacity, StyleSheet, Switch, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const SecuritySettingsCard = () => {
   const navigation = useNavigation();
-    const [isUsageCapEnabled, setIsUsageCapEnabled] = useState(false);
-    const dailyCapCount = 100; // Replace with your default value
-    const dailyCapAmount = 50; // Replace with your default value
-  
-    const toggleUsageCap = () => {
-      setIsUsageCapEnabled(!isUsageCapEnabled);
-    };
+  const [isUsageCapEnabled, setIsUsageCapEnabled] = useState(false);
+  const dailyCapCount = 100; // Replace with your default value
+  const dailyCapAmount = 50; // Replace with your default value
 
-    const ChangePassword = () => {
-      navigation.navigate('Change Password');
-    };
+  const toggleUsageCap = () => {
+    setIsUsageCapEnabled(!isUsageCapEnabled);
+  };
 
+  const ChangePassword = () => {
+    navigation.navigate('Change Password');
+  };
 
   return (
     <View style={styles.container}>
-
-         <TouchableOpacity style={styles.optionContainer} onPress={ChangePassword}>
+      <TouchableOpacity style={styles.optionContainer} onPress={ChangePassword}>
         <View style={styles.leftContainer}>
-          <Ionicons name="lock-open-outline" size={24} color="white" />
+          <Image source={require('../src/img/change.png')} style={styles.optionIcon} />
           <Text style={styles.optionText}>Change Password</Text>
         </View>
-        <Ionicons name="chevron-forward-outline" size={24} color="white" />
+        <Image source={require('../src/img/forward.png')}
+          style={styles.chevronIcon}
+        />
       </TouchableOpacity>
 
-      <SecurityOption icon="finger-print-outline" text="Enable Fingerprint Authentication" />
+      <SecurityOption image={require('../src/img/fingerprint.png')} text="Enable Fingerprint Authentication" />
 
       <View style={styles.optionContainer}>
         <Text style={styles.optionText}>Enable Usage Cap</Text>
@@ -59,13 +58,13 @@ const SecuritySettingsCard = () => {
   );
 };
 
-const SecurityOption = ({ icon, text }) => (
+const SecurityOption = ({ image, text }) => (
   <TouchableOpacity style={styles.optionContainer} activeOpacity={0.8}>
     <View style={styles.leftContainer}>
-      <Ionicons name={icon} size={24} color="white" />
+      <Image source={image} style={styles.optionIcon} />
       <Text style={styles.optionText}>{text}</Text>
     </View>
-    <Ionicons name="chevron-forward-outline" size={24} color="white" style={{marginLeft:1}}/>
+    <Image source={require('../src/img/forward.png')} style={styles.chevronIcon} />
   </TouchableOpacity>
 );
 
@@ -91,15 +90,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 40,
   },
+  optionIcon: {
+    width: 24,
+    height: 24,
+    tintColor: 'white',
+  },
   optionText: {
     fontSize: 16,
     fontWeight: 'bold',
     marginLeft: 16,
+    color: 'white',
+  },
+  chevronIcon: {
+    width: 24,
+    height: 24,
+    tintColor: 'white',
+    marginLeft: 1,
   },
   optionValue: {
     fontSize: 16,
   },
-  
 });
 
 export default SecuritySettingsCard;

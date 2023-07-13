@@ -44,7 +44,7 @@ const Header = () => {
     <Animated.View style={[styles.header, { shadowOpacity }]}>
       <View style={styles.searchContainer}>
         <TouchableOpacity onPress={handleProfilePress} style={styles.menuContainer}>
-        <Image source={require('../src/img/menu.png')} style={{ width: 24, height: 24 }}/>
+        <Image source={require('../src/img/menu.png')} style={{ width: 24, height: 24 ,tintColor: 'white',}}/>
         </TouchableOpacity>
         <TextInput
           placeholder="Search"
@@ -53,11 +53,11 @@ const Header = () => {
           onBlur={handleSearchBlur}
         />
         <TouchableOpacity style={styles.voiceSearchContainer}>
-        <Image source={require('../src/img/voice.png')} style={{ width: 24, height: 24 }}/>
+        <Image source={require('../src/img/voice.png')} style={{ width: 24, height: 24 ,tintColor: 'white',}}/>
         </TouchableOpacity>
       </View>
       <TouchableOpacity style={styles.notificationContainer}>
-     <Image source={require('../src/img/notification.png')} style={{ width: 24, height: 24 }}/>
+     <Image source={require('../src/img/notification.png')} style={{ width: 24, height: 24 ,tintColor: 'white',}}/>
       </TouchableOpacity>
     </Animated.View>
   );
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     shadowRadius: 2,
     backgroundColor: '#0078D7',
-    marginTop: 40,
+ 
   },
   searchContainer: {
     flex: 1,
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical:8,
     marginRight: 43,
+   
   },
   menuContainer: {
     marginRight: 70,
@@ -103,6 +104,7 @@ const styles = StyleSheet.create({
   },
   focusedInput: {
     borderColor: '#4c669f',
+    
   },
   notificationContainer: {
     marginLeft: 20,

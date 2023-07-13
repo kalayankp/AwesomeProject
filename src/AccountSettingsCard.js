@@ -1,47 +1,35 @@
-import React from 'react';
-import { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet,Switch } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Switch, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-
 const AccountSettingsCard = () => {
-
   const navigation = useNavigation();
+  const [isUsageCapEnabled, setIsUsageCapEnabled] = useState(false);
 
-    const [isUsageCapEnabled, setIsUsageCapEnabled] = useState(false);
- // Replace with your default value
-  
-    const toggleUsageCap = () => {
-      setIsUsageCapEnabled(!isUsageCapEnabled);
-    };
+  const toggleUsageCap = () => {
+    setIsUsageCapEnabled(!isUsageCapEnabled);
+  };
 
-    const UpdateAddress = () => {
-      navigation.navigate('UpdateAddress');
-    };
-
-const [tpinEnabled, setTpinEnabled] = useState(true);
-
-  
+  const UpdateAddress = () => {
+    navigation.navigate('UpdateAddress');
+  };
 
   const handleLedgerStatement = () => {
-    navigation.navigate('Ledger')
+    navigation.navigate('Ledger');
   };
 
   const handleIncomeVerification = () => {
-    navigation.navigate('IncomeVerificationForm')
+    navigation.navigate('IncomeVerificationForm');
   };
-
-
 
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.optionContainer} onPress={handleLedgerStatement}>
         <View style={styles.leftContainer}>
-          <Ionicons name="file-tray-outline" size={24} color="white" />
+          <Image source={require('../src/img/ledger.png')} style={styles.optionIcon} />
           <Text style={styles.optionText}>Ledger Statement</Text>
         </View>
-        <Ionicons name="chevron-forward-outline" size={24} color="white" />
+        <Image source={require('../src/img/forward.png')} style={styles.chevronIcon} />
       </TouchableOpacity>
 
       <View style={styles.optionContainer}>
@@ -61,18 +49,18 @@ const [tpinEnabled, setTpinEnabled] = useState(true);
 
       <TouchableOpacity style={styles.optionContainer} onPress={handleIncomeVerification}>
         <View style={styles.leftContainer}>
-          <Ionicons name="cash-outline" size={24} color="white" />
-          <Text style={styles.optionText}>Income verification</Text>
+          <Image source={require('../src/img/income.png')} style={styles.optionIcon} />
+          <Text style={styles.optionText}>Income Verification</Text>
         </View>
-        <Ionicons name="chevron-forward-outline" size={24} color="white" />
+        <Image source={require('../src/img/forward.png')}style={styles.chevronIcon} />
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.optionContainer} onPress={UpdateAddress}>
         <View style={styles.leftContainer}>
-          <Ionicons name="location-outline" size={24} color="white" />
+          <Image source={require('../src/img/address.png')} style={styles.optionIcon} />
           <Text style={styles.optionText}>Update Current Address</Text>
         </View>
-        <Ionicons name="chevron-forward-outline" size={24} color="white" />
+        <Image source={require('../src/img/forward.png')} style={styles.chevronIcon} />
       </TouchableOpacity>
     </View>
   );
@@ -87,12 +75,6 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     padding: 6,
   },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 16,
-    color:'white'
-  },
   optionContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -105,10 +87,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  optionIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 12,
+    tintColor: 'white',
+  },
+  chevronIcon: {
+    width: 24,
+    height: 24,
+    tintColor: 'white',
+  },
   optionText: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginLeft: 12,
+    color: 'white',
   },
 });
 

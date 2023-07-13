@@ -12,9 +12,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Dropdown } from 'react-native-material-dropdown-v2';
 import { Picker } from '@react-native-picker/picker';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import moment from 'moment';
-import Fontisto from 'react-native-vector-icons/Fontisto';
+// import DateTimePickerModal from 'react-native-modal-datetime-picker';
+// import moment from 'moment';
+
 
 const roles = [
   'Select Gender',
@@ -158,12 +158,12 @@ const Login = ({ navigation }) => {
       >
    <View style={styles.input}>
    <Text style={styles.textDOB}>Select Date Of Birth</Text>
-   <DateTimePickerModal
+   {/* <DateTimePickerModal
      isVisible={isDatePickerVisible}
      mode="date"
      onConfirm={handleConfirm}
      onCancel={hideDatePicker}
-   />
+   /> */}
 
 <View >
 <TouchableOpacity onPress={showDatePicker}  >

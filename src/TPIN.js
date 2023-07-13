@@ -1,40 +1,41 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet,Switch } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { View, Text, TouchableOpacity, StyleSheet, Switch, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const SecuritySettingsCard = () => {
+const TPIN = () => {
   const navigation = useNavigation();
   const [isUsageCapEnabled, setIsUsageCapEnabled] = useState(false);
-// Replace with your default value
 
   const toggleUsageCap = () => {
     setIsUsageCapEnabled(!isUsageCapEnabled);
   };
+
   const ForgotPassword = () => {
     navigation.navigate('Forgot TPIN');
   };
+
   const ChangePassword = () => {
     navigation.navigate('Change');
   };
 
   return (
     <View style={styles.container}>
-      
       <TouchableOpacity style={styles.optionContainer} onPress={ForgotPassword}>
         <View style={styles.leftContainer}>
-          <Ionicons name="key-outline" size={24} color="white" />
+          <Image source={require('../src/img/tpin.png')} style={styles.optionIcon} />
           <Text style={styles.optionText}>Forgot TPIN</Text>
         </View>
-        <Ionicons name="chevron-forward-outline" size={24} color="white" />
+        <Image source={require('../src/img/forward.png')} style={styles.chevronIcon} />
       </TouchableOpacity>
+
       <TouchableOpacity style={styles.optionContainer} onPress={ChangePassword}>
         <View style={styles.leftContainer}>
-          <Ionicons name="key-outline" size={24} color="white" />
+          <Image source={require('../src/img/tpin.png')}  style={styles.optionIcon} />
           <Text style={styles.optionText}>Change TPIN</Text>
         </View>
-        <Ionicons name="chevron-forward-outline" size={24} color="white" style={{marginLeft:195}}/>
+        <Image source={require('../src/img/forward.png')}  style={styles.chevronIcon} />
       </TouchableOpacity>
+
       <View style={styles.optionContainer}>
         <Text style={styles.optionText}>Enable TPIN</Text>
         <Switch
@@ -63,12 +64,6 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     padding: 16,
   },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 16,
-    color:'white'
-  },
   optionContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -81,30 +76,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  optionIcon: {
+    width: 24,
+    height: 24,
+    tintColor: 'white',
+  },
   optionText: {
     fontSize: 16,
     fontWeight: 'bold',
     marginLeft: 16,
+    color: 'white',
   },
-  enableDisableContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 16,
-  },
-  enableDisableText: {
-    fontSize: 16,
-    marginRight: 8,
-  },
-  enableDisableButton: {
-    backgroundColor: '#2196F3',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 2,
-  },
-  enableDisableButtonText: {
-    fontSize: 14,
-    color: '#FFFFFF',
+  chevronIcon: {
+    width: 24,
+    height: 24,
+    tintColor: 'white',
+    marginLeft: 195,
   },
 });
 
-export default SecuritySettingsCard;
+export default TPIN;
