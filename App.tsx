@@ -6,8 +6,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 const Stack = createNativeStackNavigator();
-
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+
 import Home from './src/Home';
 
 // Initialize Apollo Client
@@ -21,10 +21,7 @@ export default function App() {
     <ApolloProvider client={client}>
     <NavigationContainer>
       <Stack.Navigator>
-        
         <Stack.Screen name="Home" component={Home} options={{ title: 'Welcome' }} />
-        
-
       </Stack.Navigator>
     </NavigationContainer>
     </ApolloProvider>
